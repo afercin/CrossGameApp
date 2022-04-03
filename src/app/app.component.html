@@ -1,0 +1,21 @@
+<div class="button_area">
+    <img src='{{ "assets/images/seabery.png" }}'>
+    <table>
+        <tr>
+            <td>Email: </td>
+            <td><input type="text" [(ngModel)]="username"></td>
+        </tr>
+        <tr>
+            <td>Password: </td>
+            <td><input type="password" [(ngModel)]="password"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button (click)="incur()">Log time</button>
+                <button (click)="report()">Month report</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div [innerHtml]="message" class="console" #scroll></div>
+<router-outlet></router-outlet>
