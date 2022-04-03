@@ -12,9 +12,9 @@ createWindow = async () => {
     }
     //Create app window
     appWin = new BrowserWindow({
-        width: 800,
-        height: 600,
-        title: "Angular and Electron",
+        width: 1920,
+        height: 1080,
+        title: "Cross Game",
         icon: `${__dirname}src/assets/icons/${icons[process.platform]}`,
         resizable: false,
         webPreferences: {
@@ -27,7 +27,7 @@ createWindow = async () => {
     //Disable menu
     appWin.setMenu(null);
 
-    //appWin.webContents.openDevTools();
+    appWin.webContents.openDevTools();
 
     appWin.on("closed", () => {
         appWin = null;

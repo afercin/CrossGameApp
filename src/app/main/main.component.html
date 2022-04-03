@@ -1,21 +1,17 @@
-<div class="button_area">
-    <a routerLink="/games" routerLinkActive="active">First Component</a>
-    <img src='{{ "assets/images/seabery.png" }}'>
-    <table>
-        <tr>
-            <td>Email: </td>
-            <td><input type="text" [(ngModel)]="username"></td>
-        </tr>
-        <tr>
-            <td>Password: </td>
-            <td><input type="password" [(ngModel)]="password"></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <button (click)="incur()">Log time</button>
-                <button (click)="report()">Month report</button>
-            </td>
-        </tr>
-    </table>
+<div class="button_container">
+    <a routerLink="/tv">
+        <div class="col tv">
+            <p>TV</p>
+        </div>
+    </a>
+    <a routerLink="/games">
+        <div class="col games">
+            <p>Games</p>
+        </div>
+    </a>
+    <a routerLink="/videos">
+        <div class="col videos">
+            <p>Videos</p>
+        </div>
+    </a>
 </div>
-<div [innerHtml]="message" class="console" #scroll></div>

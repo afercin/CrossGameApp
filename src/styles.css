@@ -9,3 +9,12 @@
 .error {
     color: #D61121;
 }
+html, body {
+    min-height: 100vh;
+    height: auto;
+    margin: 0;
+}
+
+body {
+    background-color:red;
+}

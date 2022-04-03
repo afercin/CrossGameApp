@@ -1,35 +1,27 @@
-body {
-    margin: 0;
+.button_container, .col {
+    height: 90vh;
 }
-.button_area, .console {    
-    width: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+.button_container {
+    width: 100vw;
+    margin-top: 5vh;
 }
-.button_area {
-    min-height: 100px;
+.col {
+    float: left;
+    margin-left: 5vh;
+    width: calc((100vw - 20vh) / 3);
 }
-.console {
-    min-height: 450px;
-    max-height: 450px;
-    border:1px solid #999999;
-    overflow-y: auto;
-    padding: 3px;
-    color: #eee;
-    background-color: #1e1e1e;
+.col > p {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    color: white;
 }
-input {
-    width: 228px;
+.tv {
+    background-color: red;
 }
-button {
-    height: 34px;
-    width: 150px;
-    margin-right: 8px;
-    margin-top: 4px;
+.games {
+    background-color: green;
 }
-img {
-    height: 92px; 
-    width: auto;
-    float: right;
+.videos {
+    background-color: blue;
 }
