@@ -8,39 +8,21 @@ import { VideoPlayerComponent } from './videos/video-player/video-player.compone
 import { VideosComponent } from './videos/videos.component';
 
 const routes: Routes = [
+  { path: "main", component: MainComponent },
   {
-    path: "main",
-    component: MainComponent
-  },
-  {
-    path: "games",
-    component: GamesComponent,
-    children: [
-      {
-        path: "launcher",
-        component: GameLauncherComponent
-      }
+    path: "games", children: [
+      { path: "", component: GamesComponent },
+      { path: "launcher", component: GameLauncherComponent }
     ]
   },
-  { 
-    path: "videos", 
-    component: VideosComponent,
-    children: [
-      {
-        path: "player",
-        component: VideoPlayerComponent
-      }
+  {
+    path: "videos", children: [
+      { path: "", component: VideosComponent },
+      { path: "player", component: VideoPlayerComponent }
     ]
   },
-  { 
-    path: "tv", 
-    component: TvComponent 
-  },
-  {
-    path: "",
-    redirectTo: "/videos", 
-    pathMatch: "full"
-  }
+  { path: "tv", component: TvComponent },
+  { path: "", redirectTo: "/main", pathMatch: "full" }
 ];
 
 @NgModule({
@@ -48,5 +30,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {
-
 }
