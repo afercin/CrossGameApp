@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
-import { Game } from '../game';
+import { Game } from '../../../types/game';
 
 @Component({
   selector: 'app-game-thumbnail',

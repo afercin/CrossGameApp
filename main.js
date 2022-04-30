@@ -90,6 +90,11 @@ ipcMain.on("get_credentials", async (event, arg) => {    //override console.log
     event.reply("get_credentials", [properties.get("USERNAME"), properties.get("PASSWORD")])
 });
 
+ipcMain.on("launch_game", async (event, arg) => {
+    var game = arg;
+    console.log(`Launch game ${game.name} with emulator ${game.emulator}`);
+});
+
 app.on("ready", createWindow);
 
 app.on("window-all-closed", () => {
