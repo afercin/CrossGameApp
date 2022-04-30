@@ -26,7 +26,11 @@ export class RestService {
     return this.http.get(`${endpoint}/audio`, httpOptions);
   }
 
-  public setAudioDevice(): Observable<any> {
-    return this.http.get(`${endpoint}/audio?sink=1`, httpOptions);
+  public setAudioDevice(sink: number): Observable<any> {
+    return this.http.get(`${endpoint}/audio?sink=${sink}`, httpOptions);
+  }
+
+  public getImages(game: string): Observable<any> {
+    return this.http.get(`${endpoint}/images?game=${game}`, httpOptions);
   }
 }

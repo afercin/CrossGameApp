@@ -1,1 +1,16 @@
-<p>game-thumbnail works!</p>
+<div *ngIf="game"
+     class="miniature area">
+     
+    <div class="image area">
+
+        <img src="{{miniaturePath}}">
+
+    </div>
+
+    <div class="text area" >
+
+        <p>{{game.name}}</p>
+
+    </div>
+
+</div>

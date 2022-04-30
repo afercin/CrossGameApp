@@ -1,0 +1,28 @@
+.miniature {
+    background-color: #292728;
+    position: relative;
+    height: 100%;
+}
+.area {
+    width: 100%;
+}
+.image, .text {
+    position: absolute;
+}
+.image {
+    top: 0;
+    height: 83%;
+    background-color: white;
+}
+.text {
+    bottom: 0;
+    height: 17%;
+    max-width: 100%;
+    display: table;
+    overflow: hidden;
+}
+.text > p {
+    padding: 0 0 0 6px;
+    vertical-align: middle;
+    display: table-cell;
+} 
