@@ -1,19 +1,17 @@
 <div class="background">
     <img src="assets/images/DefaultBg.jpg">
 </div>
-<div class="game area">
+<div *ngIf="games" class="game area">
     <app-game-thumbnail *ngFor="let game of games" [game]="game"
-                        (mouseover)="selectedGame = game"
-                        (mouseout)="selectedGame = null"
                         (click)="launchGame(game)"
-                        [ngStyle]="{border: selectedGame==game ? '2px solid #0078d7' : '2px solid transparent'}">
+                        [ngStyle]="{border: games[selectedGame]==game ? '2px solid #0078d7' : '2px solid transparent'}">
     </app-game-thumbnail>
 </div>
 <div class="top area">
     <div class="left">
         <div class="image">
             <div class="button">
-                <img src="assets/icons/Start.png">
+                <img src="assets/icons/Back.png">
                 <h1>Configure</h1>
             </div>
         </div>
@@ -26,7 +24,7 @@
     <div class="right">
         <div class="image">            
             <div class="button">
-                <img src="assets/icons/X.png">
+                <img src="assets/icons/Start.png">
                 <h1>Reload</h1>
             </div>  
         </div>
