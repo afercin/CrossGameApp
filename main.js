@@ -1,6 +1,7 @@
 const { app, ipcMain, BrowserWindow } = require("electron");
 const { incurring, reportIncurring } = require('./src/backend/process/Kenjo');
 var propertiesReader = require('properties-reader');
+const { launchGame } = require("./src/backend/gameLauncher");
 var rootPath = require('electron-root-path').rootPath + (process.platform == "linux" ? "/auto-kenjo" : "");
 
 let appWin;
@@ -90,10 +91,7 @@ ipcMain.on("get_credentials", async (event, arg) => {    //override console.log
     event.reply("get_credentials", [properties.get("USERNAME"), properties.get("PASSWORD")])
 });
 
-ipcMain.on("launch_game", async (event, arg) => {
-    var game = arg;
-    console.log(`Launch game ${game.name} with emulator ${game.emulator}`);
-});
+ipcMain.on("launch_game", async (event, arg) => launchGame(arg));
 
 app.on("ready", createWindow);
 
