@@ -10,12 +10,13 @@ import { Game } from '../../../types/game';
 export class GameThumbnailComponent implements OnInit {
 
   @Input() game?: Game;
-  overlay: boolean;
+  ready: boolean;
   imagePath: string;
   miniaturePath: string;
 
+
   constructor(private restService: RestService) {
-    this.overlay = true;
+    this.ready = false;
     this.imagePath = "assets/images/DefaultBg.jpg";
     this.miniaturePath = "assets/images/DefaultM.jpg";
   }
@@ -24,11 +25,13 @@ export class GameThumbnailComponent implements OnInit {
     if (this.game != undefined)
       this.restService.getImages(this.game.name).subscribe({
         next: (res) => {
-          for (var imageNumber in res)
-            if (res[imageNumber].indexOf("_miniature") !== -1)
-              this.miniaturePath = res[imageNumber];
-            else
-              this.imagePath = res[imageNumber];
+          if (this.game != undefined)
+            for (var imageNumber in res)
+              if (res[imageNumber].indexOf("_miniature") !== -1)              
+                this.miniaturePath = `http://localhost:5000/api/v1/get-miniature?game=${this.game.name}`;
+              else
+                this.imagePath = `http://localhost:5000/api/v1/get-image?game=${this.game.name}`;
+            this.ready = true;
         },
         error: (err) => console.log(`Request failed with error: ${err}`)
       });
