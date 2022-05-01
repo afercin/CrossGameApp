@@ -20,10 +20,7 @@
     "dist": "ng build && electron-builder"
   },
   "build": {
-    "appId": "Kenjo",
-    "extraFiles": [
-      "kenjo.properties"
-    ],
+    "appId": "crossgame",
     "dmg": {
       "contents": [
         {
@@ -61,8 +58,7 @@
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
     "electron-root-path": "^1.0.16",
-    "properties-reader": "^2.2.0",
-    "puppeteer": "^13.3.1"
+    "properties-reader": "^2.2.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^13.1.4",
@@ -71,7 +67,7 @@
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "electron": "^16.0.7",
-    "electron-builder": "^22.8.0",
+    "electron-builder": "^22.14.13",
     "electron-packager": "^15.4.0",
     "jasmine-core": "~3.10.0",
     "karma": "~6.3.0",

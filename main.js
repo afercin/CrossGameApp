@@ -1,8 +1,5 @@
 const { app, ipcMain, BrowserWindow } = require("electron");
-const { incurring, reportIncurring } = require('./src/backend/process/Kenjo');
-var propertiesReader = require('properties-reader');
 const { launchGame } = require("./src/backend/gameLauncher");
-var rootPath = require('electron-root-path').rootPath + (process.platform == "linux" ? "/auto-kenjo" : "");
 
 let appWin;
 createWindow = async () => {
@@ -34,62 +31,6 @@ createWindow = async () => {
         appWin = null;
     });
 }
-
-ipcMain.on("button_click", async (event, arg) => {
-    //override console.log
-    console.log = function (message) {
-        event.reply("log", message);
-    }
-    //override console.info
-    console.info = function (message) {
-        event.reply("info", `[INFO] ${message}`);
-    }
-    //override console.warn
-    console.warn = function (message) {
-        event.reply("warn", message);
-    }
-    //override console.error
-    console.error = function (message) {
-        event.reply("error", `[ERROR] ${message}`);
-    }
-
-    try {
-        //Proces button click event
-        console.info("Connecting to Kenjo")
-        switch (arg[0]) {
-            case "incur":
-                await incurring(arg[1], arg[2]);
-                break;
-            case "report":
-                await reportIncurring(arg[1], arg[2]);
-                break;
-        }
-    }
-    catch (e) {
-        console.error(e.message);
-    }
-});
-
-ipcMain.on("get_credentials", async (event, arg) => {    //override console.log
-    console.log = function (message) {
-        event.reply("log", message);
-    }
-    //override console.info
-    console.info = function (message) {
-        event.reply("info", message);
-    }
-    //override console.warn
-    console.warn = function (message) {
-        event.reply("warn", message);
-    }
-    //override console.error
-    console.error = function (message) {
-        event.reply("error", message);
-    }
-
-    var properties = propertiesReader(`${rootPath}/kenjo.properties`);
-    event.reply("get_credentials", [properties.get("USERNAME"), properties.get("PASSWORD")])
-});
 
 ipcMain.on("launch_game", async (event, arg) => launchGame(arg));
 
