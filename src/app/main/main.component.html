@@ -1,16 +1,19 @@
 <div class="button_container">
     <a routerLink="/tv">
-        <div class="col tv">
+        <div class="col tv"
+             [ngStyle]="checkSelected(0)">
             <p>TV</p>
         </div>
     </a>
     <a routerLink="/games">
-        <div class="col games">
+        <div class="col games"
+             [ngStyle]="checkSelected(1)">
             <p>Games</p>
         </div>
     </a>
     <a routerLink="/videos">
-        <div class="col videos">
+        <div class="col videos"
+             [ngStyle]="checkSelected(2)">
             <p>Videos</p>
         </div>
     </a>

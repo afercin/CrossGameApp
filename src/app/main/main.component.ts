@@ -1,56 +1,75 @@
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { RestService } from '../services/rest.service';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+    selector: 'app-main',
+    templateUrl: './main.component.html',
+    styleUrls: ['./main.component.css'],
+    host: {
+        '(document:keypress)': 'handleKeyboardEvent($event)'
+    }
 })
 export class MainComponent implements OnInit {
-  @ViewChild('scroll', { read: ElementRef }) public scroll: ElementRef<any> | undefined;
-  message: string = "";
-  username: string = "";
-  password: string = "";
-  object: object | any;
+    option: number = 1;
+    optionName: string[];
 
-  constructor(private restService: RestService, private cdRef: ChangeDetectorRef) { }
+    constructor(private cdRef: ChangeDetectorRef, private route: Router) {
+        this.optionName = ["tv","games","videos"]
+    }
 
 
-  ngOnInit(): void {
-}
+    ngOnInit(): void {
+    }
 
-printMsg(msg: string): void {
-    this.message += `${msg}<br/>`;
-    this.cdRef.detectChanges();
-    if (this.scroll != undefined)
-        this.scroll.nativeElement.scrollTop = this.scroll.nativeElement.scrollHeight;
-}
+    checkSelected(i: number): Object {
+        var backgrounColor, borderColor;
 
-ngOnDestroy(): void {
-}
+        switch(i) {
+            case 0:
+                backgrounColor = "#da191e";
+                borderColor = "#f71c22"
+                break;
+            case 1:
+                backgrounColor = "#90d216";
+                borderColor = "#9de518";
+                break;
+            case 2:
+                backgrounColor = "#3095bf";
+                borderColor = "#3ab4e7"
+                break;
+        }
 
-incur(): void {
-    this.restService.getGames().subscribe({
-        next:   (res) =>
-        {
-            for(var attributename in res){
-                console.log(attributename+": ");
-                if (typeof res[attributename] == typeof [Object])
-                for (var a in res[attributename])
-                    console.log(`${a}: ${res[attributename][a]}`)
-            }
-        } ,
-        error:  (err) => this.printMsg(`Request failed with error: ${err}`),
-        complete: () => this.printMsg('complete') 
-    });
-    console.log("Hola")
-    //this.message = "";
-    //this.ipcService.send("get_credentials");
-    //this.ipcService.send("button_click", ["incur", this.username, this.password]);
-}
+        if (i == this.option){
+            backgrounColor += "99"
+            borderColor += "99"
+        }
+        else {
+            backgrounColor += "55"
+            borderColor = "transparent"
+        }
 
-report(): void {
-    
-}
+        return {
+            "background-color": backgrounColor,
+            "border": `2px solid ${borderColor}`
+           };
+    }
+
+    handleKeyboardEvent(event: KeyboardEvent) {
+        console.log(`Main Keypress: ${event.key}`);
+        switch (event.key){
+            case "a":
+                this.option = (this.option + 2) % 3;
+                this.cdRef.detectChanges();
+                break;
+            case "d":
+                this.option = (this.option + 1) % 3;
+                this.cdRef.detectChanges();
+                break;
+            case "Enter":
+                this.route.navigate([this.optionName[this.option]])
+                break;
+
+        }
+    }
 
 }
