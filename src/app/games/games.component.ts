@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RestService } from '../services/rest.service';
 import { Game } from '../../types/game';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-games',
@@ -14,13 +15,20 @@ import { Game } from '../../types/game';
     }
 })
 export class GamesComponent implements OnInit {
+    @ViewChild('scroll', { read: ElementRef }) public scroll: ElementRef<any> | undefined;
+    @ViewChild('miniature', { read: ElementRef }) public miniature: ElementRef<any> | undefined;
 
     games: Game[] = [];
     selectedGame: number = 0;
+    maxY: number = 0;
 
-    constructor(private restService: RestService, private cdRef: ChangeDetectorRef) { }
+    constructor(private restService: RestService, private cdRef: ChangeDetectorRef, private router: Router) { }
 
     ngOnInit(): void {
+        this.searchGames();
+    }
+
+    searchGames(): void {
         this.restService.getGames().subscribe({
             next: (res) => {
                 var games = [];
@@ -35,7 +43,11 @@ export class GamesComponent implements OnInit {
                     }
                 }
                 games.sort((a, b) => a.name.localeCompare(b.name));
-                this.games = games
+                this.games = games;
+                if (this.scroll != null)
+                    this.scroll.nativeElement.scrollTop = 0;
+                this.cdRef.detectChanges();
+                this.maxY = Math.floor((this.games.length) / 7);
             },
             error: (err) => console.log(`Request failed with error: ${err}`)
         });
@@ -43,12 +55,14 @@ export class GamesComponent implements OnInit {
 
     handleKeyboardEvent(event: KeyboardEvent) {
         switch (event.key){
-            case "Enter": this.play(); break;
+            case "Enter": this.launchGame(this.games[this.selectedGame]); break;
             case "q": this.back(); break;
             case "a": this.moveLeft(); break;
             case "d": this.moveRight(); break;
+            case "s": this.moveDown(); break;
+            case "w": this.moveUp(); break;
             case "o": this.options(); break;
-            case "r": this.reload(); break;
+            case "r": this.searchGames(); break;
         }
     }
 
@@ -56,33 +70,55 @@ export class GamesComponent implements OnInit {
         console.log("Openning options");
     }
     
-    play(): void {
-        this.launchGame(this.games[this.selectedGame])
-    }
-
-    reload(): void {
-        console.log("Reload page");
-    }
-    
     back(): void {
-        console.log("Returning to main menu");
+        this.router.navigate(["/"]);
     }
 
     moveRight(): void {
-        this.selectedGame += 1;
-        this.selectedGame %= this.games.length;
-        this.cdRef.detectChanges();
+        this.selectedGame = (this.selectedGame + 1) % this.games.length;
+        this.checkPosition();
     }
 
     moveLeft(): void {
         this.selectedGame -= 1;
         if (this.selectedGame < 0)
-            this.selectedGame = this.games.length -1;
+            this.selectedGame = this.games.length - 1;
+        this.checkPosition();
+    }
+
+    moveDown(): void {
+        if (this.selectedGame + 7 < this.games.length)
+            this.selectedGame += 7;
+        else {
+            this.selectedGame %= 7;
+        }
+        this.checkPosition();
+    }
+
+    moveUp(): void {
+        if (this.selectedGame - 7 >= 0)
+            this.selectedGame -= 7
+        else {
+            this.selectedGame = this.selectedGame + (this.maxY - 1) * 7;
+            if (this.selectedGame >= this.games.length)
+                this.selectedGame = this.games.length - 1;
+        }
+        this.checkPosition();
+    }
+
+    checkPosition() {
+        if (this.scroll != undefined && this.miniature != undefined)
+            this.scroll.nativeElement.scrollTop = this.miniature.nativeElement.clientHeight * Math.floor(this.selectedGame / 7);
+        
         this.cdRef.detectChanges();
     }
 
     launchGame(game: Game): void {
-        console.log(`Playing ${game.name}`);        
+        if (this.games.length > 0)
+            this.restService.launchGame(this.games[this.selectedGame]).subscribe({
+                next: (res) => console.log(`${res["result"]}`),
+                error: (err) => console.log(`Request failed with error: ${err}`)
+            });      
     }
 
 }

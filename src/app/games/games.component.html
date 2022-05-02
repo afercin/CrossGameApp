@@ -1,8 +1,9 @@
 <div class="background">
     <img src="assets/images/DefaultBg.jpg">
 </div>
-<div *ngIf="games" class="game area">
-    <app-game-thumbnail *ngFor="let game of games" [game]="game"
+<div *ngIf="games" class="game area" #scroll>
+    <app-game-thumbnail #miniature
+                        *ngFor="let game of games" [game]="game"
                         (click)="launchGame(game)"
                         [ngStyle]="{border: games[selectedGame]==game ? '2px solid #0078d7' : '2px solid transparent'}">
     </app-game-thumbnail>

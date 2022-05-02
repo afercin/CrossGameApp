@@ -13,7 +13,7 @@ export class MainComponent implements OnInit {
     option: number = 1;
     optionName: string[];
 
-    constructor(private cdRef: ChangeDetectorRef, private route: Router) {
+    constructor(private cdRef: ChangeDetectorRef, private router: Router) {
         this.optionName = ["tv","games","videos"]
     }
 
@@ -55,7 +55,6 @@ export class MainComponent implements OnInit {
     }
 
     handleKeyboardEvent(event: KeyboardEvent) {
-        console.log(`Main Keypress: ${event.key}`);
         switch (event.key){
             case "a":
                 this.option = (this.option + 2) % 3;
@@ -66,9 +65,8 @@ export class MainComponent implements OnInit {
                 this.cdRef.detectChanges();
                 break;
             case "Enter":
-                this.route.navigate([this.optionName[this.option]])
+                this.router.navigate([this.optionName[this.option]])
                 break;
-
         }
     }
 

@@ -33,4 +33,8 @@ export class RestService {
   public getImages(game: string): Observable<any> {
     return this.http.get(`${endpoint}/images?game=${game}`, httpOptions);
   }
+
+  public launchGame(game: any): Observable<any> {
+    return this.http.get(`${endpoint}/launch-game?name=${game.name}&emulator=${game.emulator}`, httpOptions);
+  }
 }
