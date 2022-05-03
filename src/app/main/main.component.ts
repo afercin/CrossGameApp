@@ -56,10 +56,12 @@ export class MainComponent implements OnInit {
 
     handleKeyboardEvent(event: KeyboardEvent) {
         switch (event.key){
+            case "A":
             case "a":
                 this.option = (this.option + 2) % 3;
                 this.cdRef.detectChanges();
                 break;
+            case "D":
             case "d":
                 this.option = (this.option + 1) % 3;
                 this.cdRef.detectChanges();

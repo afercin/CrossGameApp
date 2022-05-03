@@ -56,12 +56,19 @@ export class GamesComponent implements OnInit {
     handleKeyboardEvent(event: KeyboardEvent) {
         switch (event.key){
             case "Enter": this.launchGame(this.games[this.selectedGame]); break;
+            case "Q":
             case "q": this.back(); break;
+            case "A":
             case "a": this.moveLeft(); break;
+            case "D":
             case "d": this.moveRight(); break;
+            case "S":
             case "s": this.moveDown(); break;
+            case "W":
             case "w": this.moveUp(); break;
+            case "O":
             case "o": this.options(); break;
+            case "R":
             case "r": this.searchGames(); break;
         }
     }
