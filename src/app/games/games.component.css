@@ -108,22 +108,22 @@ h1 {
 .bottom,
 .left .image,
 .right .image {
-    display: flex;    
+    display: flex;
 }
 
 .left .image,
 .right .image,
 .bottom {
-   justify-content: center;
+    justify-content: center;
 }
 
 .bottom .button {
-    margin-top: 5px;   
+    margin-top: 5px;
     margin-right: 6px;
     margin-left: 36px;
 }
 
-.left .button{
+.left .button {
     margin-right: 58px;
 }
 

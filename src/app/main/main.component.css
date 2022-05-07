@@ -1,10 +1,13 @@
-.button_container, .col {
+.button_container,
+.col {
     height: 90vh;
 }
+
 .button_container {
     width: 100vw;
     margin-top: 5vh;
 }
+
 .col {
     float: left;
     margin-left: 5vh;
@@ -13,7 +16,8 @@
     transition: border 0.3s;
     border-radius: 30px;
 }
-.col > p {
+
+.col>p {
     text-align: center;
     position: relative;
     top: 50%;

@@ -1,40 +1,39 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
-import { Game } from '../../../types/game';
+import { Game } from '../game';
 
 @Component({
-  selector: 'app-game-thumbnail',
-  templateUrl: './game-thumbnail.component.html',
-  styleUrls: ['./game-thumbnail.component.css']
+    selector: 'app-game-thumbnail',
+    templateUrl: './game-thumbnail.component.html',
+    styleUrls: ['./game-thumbnail.component.css']
 })
 export class GameThumbnailComponent implements OnInit {
+    @Input() game?: Game;
 
-  @Input() game?: Game;
-  ready: boolean;
-  imagePath: string;
-  miniaturePath: string;
+    ready: boolean;
+    imagePath: string;
+    miniaturePath: string;
 
+    constructor(private restService: RestService) {
+        this.ready = false;
+        this.imagePath = "assets/images/DefaultBg.jpg";
+        this.miniaturePath = "assets/images/DefaultM.jpg";
+    }
 
-  constructor(private restService: RestService) {
-    this.ready = false;
-    this.imagePath = "assets/images/DefaultBg.jpg";
-    this.miniaturePath = "assets/images/DefaultM.jpg";
-  }
-
-  ngOnInit(): void {
-    if (this.game != undefined)
-      this.restService.getImages(this.game.name).subscribe({
-        next: (res) => {
-          if (this.game != undefined)
-            for (var imageNumber in res)
-              if (res[imageNumber].indexOf("_miniature") !== -1)              
-                this.miniaturePath = `http://localhost:5000/api/v1/get-miniature?game=${this.game.name}`;
-              else
-                this.imagePath = `http://localhost:5000/api/v1/get-image?game=${this.game.name}`;
-            this.ready = true;
-        },
-        error: (err) => console.log(`Request failed with error: ${err}`)
-      });
-  }
+    ngOnInit(): void {
+        if (this.game != undefined)
+            this.restService.getImages(this.game.name).subscribe({
+                next: (res) => {
+                    if (this.game != undefined)
+                        for (var imageNumber in res)
+                            if (res[imageNumber].indexOf("_miniature") !== -1)
+                                this.miniaturePath = `http://localhost:5000/api/v1/get-miniature?game=${this.game.name}`;
+                            else
+                                this.imagePath = `http://localhost:5000/api/v1/get-image?game=${this.game.name}`;
+                    this.ready = true;
+                },
+                error: (err) => console.log(`Request failed with error: ${err}`)
+            });
+    }
 
 }

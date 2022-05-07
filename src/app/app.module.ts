@@ -14,23 +14,23 @@ import { TvComponent } from './tv/tv.component';
 import { MainComponent } from './main/main.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    GamesComponent,
-    GameThumbnailComponent,
-    GameLauncherComponent,
-    VideosComponent,
-    VideoPlayerComponent,
-    TvComponent,
-    MainComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        GamesComponent,
+        GameThumbnailComponent,
+        GameLauncherComponent,
+        VideosComponent,
+        VideoPlayerComponent,
+        TvComponent,
+        MainComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

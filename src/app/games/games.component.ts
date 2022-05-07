@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RestService } from '../services/rest.service';
-import { Game } from '../../types/game';
+import { Game } from './game';
 import { Router } from '@angular/router';
 import { IpcService } from '../services/ipc.service';
 
@@ -34,11 +34,9 @@ export class GamesComponent implements OnInit {
             next: (res) => {
                 var games = [];
                 var emulator, game;
-                for (var emulatorNumber in res) 
-                {
+                for (var emulatorNumber in res) {
                     emulator = res[emulatorNumber];
-                    for (var gameNumber in emulator["games"])
-                    {
+                    for (var gameNumber in emulator["games"]) {
                         game = emulator["games"][gameNumber];
                         games.push(new Game(game["files"], game["name"], emulator["name"]));
                     }
@@ -56,7 +54,7 @@ export class GamesComponent implements OnInit {
 
     handleKeyboardEvent(event: KeyboardEvent) {
         console.log(event.key)
-        switch (event.key){
+        switch (event.key) {
             case "Enter": this.launchGame(this.games[this.selectedGame]); break;
             case "Q":
             case "q": this.back(); break;
@@ -78,7 +76,7 @@ export class GamesComponent implements OnInit {
     options(): void {
         console.log("Openning options");
     }
-    
+
     back(): void {
         this.ipcService.send("change_mode", "main");
         this.router.navigate(["/"]);
@@ -119,7 +117,7 @@ export class GamesComponent implements OnInit {
     checkPosition() {
         if (this.scroll != undefined && this.miniature != undefined)
             this.scroll.nativeElement.scrollTop = this.miniature.nativeElement.clientHeight * Math.floor(this.selectedGame / 7);
-        
+
         this.cdRef.detectChanges();
     }
 
@@ -128,7 +126,7 @@ export class GamesComponent implements OnInit {
             this.restService.launchGame(this.games[this.selectedGame]).subscribe({
                 next: (res) => console.log(`${res["result"]}`),
                 error: (err) => console.log(`Request failed with error: ${err}`)
-            });      
+            });
     }
 
 }
