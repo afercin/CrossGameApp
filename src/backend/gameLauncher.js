@@ -6,12 +6,12 @@ if (__dirname.includes("dev"))
     confFile = "/home/afercin/dev/CrossGameRPI/crossGameServer" + confFile;
 
 const properties = propertiesReader(confFile);
-const emulatorsPath = properties.get("PATH.emulators")
+const emulatorsPath = properties.get("PATH.emulators");
 
 var emulatorName = null;
 var preferredExtension = null;
 var args = null;
-var emulatorProcess = null
+var emulatorProcess = null;
 
 function getEmulatorInfo(emulator) {
     emulatorName = properties.get(`${emulator}.emulatorName`);
@@ -27,15 +27,15 @@ module.exports.launchGame = ((game) => {
         if (preferredExtension == null)
             isoFile = game.isos[0];
         else
-            isoFile = game.isos.find((e) => e.includes(preferredExtension))
+            isoFile = game.isos.find((e) => e.includes(preferredExtension));
 
         args = args == null ? "" : args;
 
-        emulatorProcess = spawn(`"${emulatorsPath}/${game.emulator}/${emulatorName}"`,[`${args} "${isoFile}"`])
+        emulatorProcess = spawn(`"${emulatorsPath}/${game.emulator}/${emulatorName}"`, [`${args} "${isoFile}"`]);
     }
 });
 
 module.exports.closeEmulator = () => {
     if (emulatorProcess != null)
-        emulatorProcess.kill("SIGINT")
+        emulatorProcess.kill("SIGINT");
 }
