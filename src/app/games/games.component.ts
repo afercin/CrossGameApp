@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { RestService } from '../services/rest.service';
 import { Game } from '../../types/game';
 import { Router } from '@angular/router';
-import { IpcService } from '../services/ipc.service';
 
 @Component({
     selector: 'app-games',
@@ -10,7 +9,10 @@ import { IpcService } from '../services/ipc.service';
     styleUrls: ['./games.component.css'],
     providers: [
         RestService
-    ]
+    ],
+    host: {
+        '(document:keypress)': 'handleKeyboardEvent($event)'
+    }
 })
 export class GamesComponent implements OnInit {
     @ViewChild('scroll', { read: ElementRef }) public scroll: ElementRef<any> | undefined;
@@ -20,12 +22,10 @@ export class GamesComponent implements OnInit {
     selectedGame: number = 0;
     maxY: number = 0;
 
-    constructor(private restService: RestService, private cdRef: ChangeDetectorRef, private router: Router, private ipcService: IpcService) {
-        this.ipcService.on("send_keys_games", (event: any, arg: string) => this.handleKeyboardEvent(arg));
-        this.searchGames();
-    }
+    constructor(private restService: RestService, private cdRef: ChangeDetectorRef, private router: Router) { }
 
     ngOnInit(): void {
+        this.searchGames();
     }
 
     searchGames(): void {
@@ -33,9 +33,11 @@ export class GamesComponent implements OnInit {
             next: (res) => {
                 var games = [];
                 var emulator, game;
-                for (var emulatorNumber in res) {
+                for (var emulatorNumber in res) 
+                {
                     emulator = res[emulatorNumber];
-                    for (var gameNumber in emulator["games"]) {
+                    for (var gameNumber in emulator["games"])
+                    {
                         game = emulator["games"][gameNumber];
                         games.push(new Game(game["files"], game["name"], emulator["name"]));
                     }
@@ -51,26 +53,32 @@ export class GamesComponent implements OnInit {
         });
     }
 
-    handleKeyboardEvent(key: string) {
-        console.log(key)
-        switch (key) {
+    handleKeyboardEvent(event: KeyboardEvent) {
+        console.log(event.key)
+        switch (event.key){
             case "Enter": this.launchGame(this.games[this.selectedGame]); break;
-            case "Q": this.back(); break;
-            case "A": this.moveLeft(); break;
-            case "D": this.moveRight(); break;
-            case "S": this.moveDown(); break;
-            case "W": this.moveUp(); break;
-            case "O": this.options(); break;
-            case "R": this.searchGames(); break;
+            case "Q":
+            case "q": this.back(); break;
+            case "A":
+            case "a": this.moveLeft(); break;
+            case "D":
+            case "d": this.moveRight(); break;
+            case "S":
+            case "s": this.moveDown(); break;
+            case "W":
+            case "w": this.moveUp(); break;
+            case "O":
+            case "o": this.options(); break;
+            case "R":
+            case "r": this.searchGames(); break;
         }
     }
 
     options(): void {
         console.log("Openning options");
     }
-
+    
     back(): void {
-        this.ipcService.send("change_mode", "main")
         this.router.navigate(["/"]);
     }
 
@@ -109,7 +117,7 @@ export class GamesComponent implements OnInit {
     checkPosition() {
         if (this.scroll != undefined && this.miniature != undefined)
             this.scroll.nativeElement.scrollTop = this.miniature.nativeElement.clientHeight * Math.floor(this.selectedGame / 7);
-
+        
         this.cdRef.detectChanges();
     }
 
@@ -118,7 +126,7 @@ export class GamesComponent implements OnInit {
             this.restService.launchGame(this.games[this.selectedGame]).subscribe({
                 next: (res) => console.log(`${res["result"]}`),
                 error: (err) => console.log(`Request failed with error: ${err}`)
-            });
+            });      
     }
 
 }
