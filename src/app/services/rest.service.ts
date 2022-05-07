@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const endpoint = '/api/v1';
+const endpoint = 'http://localhost:5000/api/v1';
 const httpOptions = {
   headers: new HttpHeaders({ "Content-Type": "application/json", "Authorization": "c31z" })
 };
