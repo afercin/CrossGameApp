@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { RestService } from '../services/rest.service';
 import { Game } from '../../types/game';
 import { Router } from '@angular/router';
+import { IpcService } from '../services/ipc.service';
 
 @Component({
     selector: 'app-games',
@@ -22,7 +23,7 @@ export class GamesComponent implements OnInit {
     selectedGame: number = 0;
     maxY: number = 0;
 
-    constructor(private restService: RestService, private cdRef: ChangeDetectorRef, private router: Router) { }
+    constructor(private restService: RestService, private cdRef: ChangeDetectorRef, private router: Router, private ipcService: IpcService) { }
 
     ngOnInit(): void {
         this.searchGames();
@@ -79,6 +80,7 @@ export class GamesComponent implements OnInit {
     }
     
     back(): void {
+        this.ipcService.send("change_mode", "main");
         this.router.navigate(["/"]);
     }
 

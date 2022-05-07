@@ -34,6 +34,10 @@ export class RestService {
     return this.http.get(`${endpoint}/images?game=${game}`, httpOptions);
   }
 
+  public getCrossgameMode(): Observable<any> {
+    return this.http.get(`${endpoint}/crossgame-mode`, httpOptions);
+  }
+
   public launchGame(game: any): Observable<any> {
     return this.http.get(`${endpoint}/launch-game?name=${game.name}&emulator=${game.emulator}`, httpOptions);
   }

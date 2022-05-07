@@ -1,11 +1,7 @@
 const { app, ipcMain, BrowserWindow } = require("electron");
-const { launchGame } = require("./src/backend/gameLauncher"); 
-const electronLocalshortcut = require('electron-localshortcut');
-
-const keys = ["A", "S", "D", "Q", "W", "Enter", "R"]
+const fs = require('fs');
 
 let appWin;
-var mode = "main";
 
 createWindow = async () => {
     icons = {
@@ -37,21 +33,7 @@ createWindow = async () => {
     });
 }
 
-function onKeyPress(event, key){
-    console.log(`send_keys_${mode}`)
-    event.reply(`send_keys_${mode}`, key);
-    console.log(key);
-}
-
-ipcMain.on("initialized", async (event, arg) => {
-    for (i in keys){
-        const key = keys[i]
-        electronLocalshortcut.register(appWin, key, () => onKeyPress(event, key));
-    }
-
-});
-ipcMain.on("launch_game", async (event, arg) => launchGame(arg));
-ipcMain.on("change_mode", async (event, arg) => mode = arg);
+ipcMain.on("change_mode", async (event, arg) => fs.writeFile('/tmp/crossgame.mode', arg, { flag: 'w' }, err => { }));
 
 app.on("ready", createWindow);
 

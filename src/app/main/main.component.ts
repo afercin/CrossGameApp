@@ -1,5 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { IpcService } from '../services/ipc.service';
+import { RestService } from '../services/rest.service';
 
 @Component({
     selector: 'app-main',
@@ -10,21 +12,30 @@ import { Router } from '@angular/router';
     }
 })
 export class MainComponent implements OnInit {
-    option: number = 1;
+    option: number = -1;
     optionName: string[];
 
-    constructor(private cdRef: ChangeDetectorRef, private router: Router) {
-        this.optionName = ["tv","games","videos"]
+    constructor(private cdRef: ChangeDetectorRef, private router: Router, private restService: RestService, private ipcService: IpcService) {
+        this.optionName = ["tv", "games", "videos"]
     }
 
 
     ngOnInit(): void {
+        this.restService.getCrossgameMode().subscribe({
+            next: (res) => {
+                var mode = res["mode"];
+                if (mode != "main")
+                    this.router.navigate([mode]);
+                this.option = 1;
+            },
+            error: (err) => console.log(`Request failed with error: ${err}`)
+        });
     }
 
     checkSelected(i: number): Object {
         var backgrounColor, borderColor;
 
-        switch(i) {
+        switch (i) {
             case 0:
                 backgrounColor = "#da191e";
                 borderColor = "#f71c22"
@@ -39,7 +50,7 @@ export class MainComponent implements OnInit {
                 break;
         }
 
-        if (i == this.option){
+        if (i == this.option) {
             backgrounColor += "99"
             borderColor += "99"
         }
@@ -51,12 +62,12 @@ export class MainComponent implements OnInit {
         return {
             "background-color": backgrounColor,
             "border": `2px solid ${borderColor}`
-           };
+        };
     }
 
     handleKeyboardEvent(event: KeyboardEvent) {
         console.log(event.key)
-        switch (event.key){
+        switch (event.key) {
             case "A":
             case "a":
                 this.option = (this.option + 2) % 3;
@@ -68,7 +79,9 @@ export class MainComponent implements OnInit {
                 this.cdRef.detectChanges();
                 break;
             case "Enter":
-                this.router.navigate([this.optionName[this.option]])
+                var mode = this.optionName[this.option];
+                this.ipcService.send("change_mode", mode);
+                this.router.navigate([mode])
                 break;
         }
     }
