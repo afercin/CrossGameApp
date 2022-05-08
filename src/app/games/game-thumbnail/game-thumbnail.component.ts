@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, isDevMode, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 import { Game } from '../game';
 
@@ -25,9 +25,9 @@ export class GameThumbnailComponent implements OnInit {
             this.restService.getImages(this.game.name).subscribe({
                 next: (res) => {
                     if (this.game != undefined){
-                        var apiPath;
+                        var apiPath, ip = isDevMode() ? "10.0.0.20" : "localhost";
                         for (var imageNumber in res){
-                            apiPath = `http://localhost:5000/api/v1/game/image?path=${res[imageNumber]}`
+                            apiPath = `http://${ip}:5000/api/v1/game/image?path=${res[imageNumber]}`
 
                             if (res[imageNumber].indexOf("_miniature") !== -1)
                                 this.miniaturePath = apiPath;

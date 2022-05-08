@@ -1,6 +1,7 @@
 const { app, ipcMain, BrowserWindow } = require("electron");
 const fs = require('fs');
 
+const isDev = process.env.APP_DEV ? (process.env.APP_DEV.trim() == "true") : false;
 let appWin;
 
 createWindow = async () => {
@@ -26,7 +27,8 @@ createWindow = async () => {
     //Disable menu
     appWin.setMenu(null);
 
-    //appWin.webContents.openDevTools();
+    if (isDev)
+        appWin.webContents.openDevTools();
 
     appWin.on("closed", () => {
         appWin = null;

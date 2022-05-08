@@ -13,12 +13,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "electron": "ng build && electron .",
-    "package-mac": "electron-packager . AutoKenjo --overwrite --asar=true --platform=darwin --arch=x64 --icon=release/assets/icons/darwin/icon.icns --prune=true --out=release-builds",
-    "package-win": "electron-packager . AutoKenjo --overwrite --asar=true --platform=win32 --arch=x64 --icon=./release/assets/icons/win32/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"AutoKenjo\"",
-    "package-lin": "electron-packager . AutoKenjo --overwrite --asar=true --platform=linux --arch=x64 --icon=release/assets/icons/linux/icon.png --prune=true --out=release-builds",
-    "dist": "ng build && electron-builder",
-    "dist_arm64": "ng build && electron-builder --arm64"
+    "electron": "ng build --configuration=development && APP_DEV=true electron .",
+    "dist": "ng build --prod && electron-builder",
+    "dist_arm64": "ng build --prod && electron-builder --arm64"
   },
   "build": {
     "appId": "crossgame",
