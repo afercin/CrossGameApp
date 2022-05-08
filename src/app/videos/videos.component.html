@@ -1,1 +1,8 @@
-<p>videos works!</p>
+<div *ngIf="videos" class="game area" #scroll>
+    <p #miniature
+       *ngFor="let video of videos"
+       (click)="openVideo(video)"
+       [ngStyle]="{border: videos[selectedVideo] == video ? '2px solid #0078d7' : '2px solid transparent'}">
+       {{ video.name }}
+    </p>
+</div>
