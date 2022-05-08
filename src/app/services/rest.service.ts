@@ -33,7 +33,7 @@ export class RestService {
     }
 
     public openVideo(video: Video): Observable<any> {
-        return this.http.get(`${endpoint}/video/open?path=${video.fullPath}`, httpOptions);
+        return this.http.get(`${endpoint}/video/open?name=${video.fullname}`, httpOptions);
     }
 
     public getAudioDevices(): Observable<any> {

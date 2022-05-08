@@ -1,3 +1,3 @@
 export class Video {
-    constructor(public name: string, public fullPath: string) { }
+    constructor(public name: string, public fullname: string) { }
 }

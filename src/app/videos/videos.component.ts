@@ -32,11 +32,11 @@ export class VideosComponent implements OnInit {
         this.restService.getVideos().subscribe({
             next: (res) => {
                 var videos = [];
-                var name, fullPath;
+                var name, fullname;
                 for (var i in res){
                     name = res[i].replace(/^.*[\\\/]/, '').replace(/\.[^/.]+$/, "");
-                    fullPath = res[i];
-                    videos.push(new Video(name, fullPath))
+                    fullname = res[i].replace(/^.*[\\\/]/, '');
+                    videos.push(new Video(name, fullname))
                 }
 
                 videos.sort((a, b) => a.name.localeCompare(b.name));
