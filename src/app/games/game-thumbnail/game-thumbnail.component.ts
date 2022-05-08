@@ -24,12 +24,16 @@ export class GameThumbnailComponent implements OnInit {
         if (this.game != undefined)
             this.restService.getImages(this.game.name).subscribe({
                 next: (res) => {
-                    if (this.game != undefined)
-                        for (var imageNumber in res)
+                    if (this.game != undefined){
+                        var apiPath;
+                        for (var imageNumber in res){
+                            apiPath = `http://localhost:5000/api/v1/game/image?path=${res[imageNumber]}`
+
                             if (res[imageNumber].indexOf("_miniature") !== -1)
-                                this.miniaturePath = `http://localhost:5000/api/v1/get-miniature?game=${this.game.name}`;
+                                this.miniaturePath = apiPath;
                             else
-                                this.imagePath = `http://localhost:5000/api/v1/get-image?game=${this.game.name}`;
+                                this.imagePath = apiPath;
+                        }}
                     this.ready = true;
                 },
                 error: (err) => console.log(`Request failed with error: ${err}`)
