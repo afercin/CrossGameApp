@@ -11,7 +11,7 @@ import { VideosComponent } from './videos/videos.component';
 import { VideoPlayerComponent } from './videos/video-player/video-player.component';
 import { TvComponent } from './tv/tv.component';
 import { MainComponent } from './main/main.component';
-
+import { ClockComponent } from './clock/clock.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -20,7 +20,8 @@ import { MainComponent } from './main/main.component';
         VideosComponent,
         VideoPlayerComponent,
         TvComponent,
-        MainComponent
+        MainComponent,
+        ClockComponent
     ],
     imports: [
         BrowserModule,

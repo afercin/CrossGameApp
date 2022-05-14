@@ -1,0 +1,10 @@
+<div class="clock">
+    <div class="table">
+        <div class="digital">{{ time | date: 'hh:mm:ss a' }}</div>
+        <svg class="analog" [attr.height]="radius*2" [attr.width]="radius*2" xmlns="http://www.w3.org/2000/svg">
+            <circle [attr.cx]="radius" [attr.cy]="radius" [attr.r]="radius-stroke_width/2" [attr.stroke-width]="radius/5" stroke="white" fill="transparent"/>
+            <line [attr.transform]="rotateMinute()" [attr.x1]="stroke_width/2" [attr.y1]="radius" [attr.x2]="radius" [attr.y2]="radius" stroke="white" [attr.stroke-width]="stroke_width"  stroke-linecap="round"/>
+            <line [attr.transform]="rotateHour()" [attr.x1]="radius" [attr.y1]="radius" [attr.x2]="radius" [attr.y2]="radius/2 + stroke_width/4" stroke="white" [attr.stroke-width]="stroke_width"  stroke-linecap="round"/>
+        </svg>
+    </div>
+</div>

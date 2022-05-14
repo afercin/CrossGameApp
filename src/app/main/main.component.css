@@ -23,3 +23,7 @@
     top: 50%;
     color: white;
 }
+
+.clock {
+    float: right;
+}
