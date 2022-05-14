@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { RestService } from './services/rest.service';
 
 
 @Component({
@@ -9,9 +10,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
     title = 'CrossGame';
 
-    constructor() { }
+    constructor(private restService: RestService) { }
 
     ngOnInit(): void {
-
+        this.restService.initializeDefaults().subscribe()
     }
 }
