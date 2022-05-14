@@ -17,6 +17,7 @@ body {
     min-height: 100vh;
     height: auto;
     margin: 0;
+    color: white;
 }
 
 body {
@@ -27,6 +28,11 @@ p {
     font-size: 1.25vw;
     margin: 0;
     padding: 0;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2vh;
 }
 
 img {

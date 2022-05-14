@@ -1,21 +1,3 @@
-.clock {
-    border: 4px solid #fff9;
-    border-radius: 8px;
-    padding: 5px 10px;
-    background:#0009;
-}
-
-.table {
-    display: table-row;
-}
-
-.analog {
-    display: table-cell;
-}
-
 .digital {
-    width: 7.3vw;
-    font-size: 1.25vw;
-    display: table-cell;
-    vertical-align: middle;
+    margin-right: 7px;
 }

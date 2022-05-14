@@ -1,44 +1,10 @@
-<div class="background">
+<!--div class="background">
     <img src="assets/images/DefaultBg.jpg">
-</div>
-<div *ngIf="games" class="game area" #scroll>
+</div-->
+<div *ngIf="games" class="game" #scroll>
     <app-game-thumbnail #miniature
                         *ngFor="let game of games" [game]="game"
                         (click)="launchGame(game)"
                         [ngStyle]="{border: games[selectedGame]==game ? '2px solid #0078d7' : '2px solid transparent'}">
     </app-game-thumbnail>
-</div>
-<div class="top area">
-    <div class="left">
-        <div class="image">
-            <div class="button">
-                <img src="assets/icons/Back.png">
-                <h1>Configure</h1>
-            </div>
-        </div>
-    </div>
-    <div class="middle">
-        <div class="image">
-            <h1>CROSS GAME</h1>       
-        </div>
-    </div>
-    <div class="right">
-        <div class="image">            
-            <div class="button">
-                <img src="assets/icons/Start.png">
-                <h1>Reload</h1>
-            </div>  
-        </div>
-    </div>
-</div>
-<div class="bottom area">
-    <div class="button">
-        <img src="assets/icons/A.png">
-        <h1>Play</h1>
-    </div>
-
-    <div class="button">
-        <img src="assets/icons/B.png">
-        <h1>Back</h1>
-    </div>    
 </div>

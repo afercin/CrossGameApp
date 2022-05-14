@@ -53,7 +53,6 @@ export class GamesComponent implements OnInit {
     }
 
     handleKeyboardEvent(event: KeyboardEvent) {
-        console.log(event.key)
         switch (event.key) {
             case "Enter": this.launchGame(this.games[this.selectedGame]); break;
             case "Q":

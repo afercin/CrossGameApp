@@ -1,8 +1,8 @@
-<div *ngIf="videos" class="game area" #scroll>
+<div *ngIf="videos" class="videos" #scroll>
     <p #miniature
        *ngFor="let video of videos"
        (click)="openVideo(video)"
-       [ngStyle]="{border: videos[selectedVideo] == video ? '2px solid #0078d7' : '2px solid transparent'}">
+       [ngStyle]="{opacity: videos[selectedVideo] == video ? '1' : '0.5'}">
        {{ video.name }}
     </p>
 </div>
