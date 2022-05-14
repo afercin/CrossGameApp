@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RestService } from './services/rest.service';
 
 
@@ -9,10 +9,18 @@ import { RestService } from './services/rest.service';
 })
 export class AppComponent implements OnInit {
     title = 'CrossGame';
+    startUp: any;
 
-    constructor(private restService: RestService) { }
+    constructor(private restService: RestService) {
+        this.startUp = new Audio();
+        this.startUp.src = "assets/sounds/startup.wav"
+        this.startUp.load()
+    }
 
     ngOnInit(): void {
-        this.restService.initializeDefaults().subscribe()
+        this.restService.initializeDefaults().subscribe({
+            next: (res) => this.startUp.play(),
+            error: (err) => console.log(`Request failed with error: ${err}`)}
+        )
     }
 }

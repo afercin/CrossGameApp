@@ -15,8 +15,13 @@ export class MainComponent implements OnInit {
     option: number = -1;
     optionName: string[];
 
+    scroll1: any;
+
     constructor(private cdRef: ChangeDetectorRef, private router: Router, private restService: RestService, private ipcService: IpcService) {
         this.optionName = ["tv", "games", "videos"]
+        this.scroll1 = new Audio();
+        this.scroll1.src = "assets/sounds/scroll1.wav"
+        this.scroll1.load()
     }
 
 
@@ -66,19 +71,21 @@ export class MainComponent implements OnInit {
     }
 
     handleKeyboardEvent(event: KeyboardEvent) {
-        console.log(event.key)
         switch (event.key) {
             case "A":
             case "a":
+                this.scroll1.play();
                 this.option = (this.option + 2) % 3;
                 this.cdRef.detectChanges();
                 break;
             case "D":
             case "d":
+                this.scroll1.play();
                 this.option = (this.option + 1) % 3;
                 this.cdRef.detectChanges();
                 break;
             case "Enter":
+                this.scroll1.play();
                 var mode = this.optionName[this.option];
                 this.ipcService.send("change_mode", mode);
                 this.router.navigate([mode])
