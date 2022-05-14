@@ -49,4 +49,8 @@ export class RestService {
     public getCrossgameMode(): Observable<any> {
         return this.http.get(`${this.endpoint}/system/mode`, httpOptions);
     }
+
+    public initializeDefaults(): Observable<any> {
+        return this.http.get(`${this.endpoint}/system/initialize`, httpOptions);
+    }
 }
