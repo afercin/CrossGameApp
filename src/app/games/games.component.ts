@@ -25,7 +25,6 @@ export class GamesComponent implements OnInit {
 
     scroll1: any;
     scroll2: any;
-    enter: any;
     error: any;
 
     constructor(private restService: RestService, private cdRef: ChangeDetectorRef, private router: Router, private ipcService: IpcService) { 
@@ -36,10 +35,6 @@ export class GamesComponent implements OnInit {
         this.scroll2 = new Audio();
         this.scroll2.src = "assets/sounds/scroll2.wav"
         this.scroll1.load()
-
-        this.enter = new Audio();
-        this.enter.src = "assets/sounds/enter.wav"
-        this.enter.load()
 
         this.error = new Audio();
         this.error.src = "assets/sounds/error.wav"
@@ -144,7 +139,6 @@ export class GamesComponent implements OnInit {
 
     launchGame(game: Game): void {
         if (this.games.length > 0) {
-            this.enter.play();
             this.restService.launchGame(this.games[this.selectedGame]).subscribe({
                 next: (res) => console.log(`${res["result"]}`),
                 error: (err) => console.log(`Request failed with error: ${err}`)
