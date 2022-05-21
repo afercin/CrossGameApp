@@ -27,7 +27,18 @@ export class VideosComponent implements OnInit {
     paused: boolean = false;
     progress: number = 0;
 
-    constructor(private restService: RestService, private cdRef: ChangeDetectorRef, private router: Router, private ipcService: IpcService) { }
+    scroll1: any;
+    scroll2: any
+
+    constructor(private restService: RestService, private cdRef: ChangeDetectorRef, private router: Router, private ipcService: IpcService) { 
+        this.scroll1 = new Audio();
+        this.scroll1.src = "assets/sounds/scroll1.wav"
+        this.scroll1.load()
+
+        this.scroll2 = new Audio();
+        this.scroll2.src = "assets/sounds/scroll2.wav"
+        this.scroll1.load()
+    }
 
     ngOnInit(): void {
         this.searchVideos()
@@ -91,6 +102,7 @@ export class VideosComponent implements OnInit {
 
     moveDown(): void {
         if (!this.playing) {
+            this.scroll1.play();
             this.selectedVideo = (this.selectedVideo + 1) % this.videos.length;
             this.checkPosition();
         } else if (this.playing && this.videoplayer) {
@@ -101,6 +113,7 @@ export class VideosComponent implements OnInit {
 
     moveUp(): void {
         if (!this.playing) {
+            this.scroll1.play();
             this.selectedVideo -= 1
             if (this.selectedVideo < 0)
                 this.selectedVideo = this.videos.length - 1;
@@ -114,9 +127,11 @@ export class VideosComponent implements OnInit {
 
     back(): void {
         this.ipcService.send("change_mode", this.playing ? "video" : "main");
-        if (!this.playing)
+        if (!this.playing) {
+            this.scroll2.play();
             this.router.navigate(["/"]);
-        //posible else para hacer pause
+        }
+
         this.playing = !this.playing;
     }
 
