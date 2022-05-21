@@ -35,7 +35,10 @@ createWindow = async () => {
     });
 }
 
-ipcMain.on("change_mode", async (event, arg) => fs.writeFile('/tmp/crossgame.mode', arg, { flag: 'w' }, err => { }));
+ipcMain.on("change_mode", async (event, arg) => {
+    fs.writeFile('/tmp/crossgame.mode', arg, { flag: 'w' }, err => { });
+    event.reply("change_mode", arg);
+});
 
 app.on("ready", createWindow);
 
