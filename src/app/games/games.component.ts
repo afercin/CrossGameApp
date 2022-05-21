@@ -16,8 +16,8 @@ import { IpcService } from '../services/ipc.service';
     }
 })
 export class GamesComponent implements OnInit {
-    @ViewChild('scroll', { read: ElementRef }) public scroll: ElementRef<any> | undefined;
-    @ViewChild('miniature', { read: ElementRef }) public miniature: ElementRef<any> | undefined;
+    @ViewChild('scroll', { read: ElementRef }) public scroll?: ElementRef<any>;
+    @ViewChild('miniature', { read: ElementRef }) public miniature?: ElementRef<any>;
 
     games: Game[] = [];
     selectedGame: number = 0;

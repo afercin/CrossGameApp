@@ -16,11 +16,16 @@ import { Video } from './video';
     }
 })
 export class VideosComponent implements OnInit {
-    @ViewChild('scroll', { read: ElementRef }) public scroll: ElementRef<any> | undefined;
-    @ViewChild('miniature', { read: ElementRef }) public miniature: ElementRef<any> | undefined;
+    @ViewChild('scroll', { read: ElementRef }) scroll?: ElementRef;
+    @ViewChild('miniature', { read: ElementRef }) miniature?: ElementRef;
+    @ViewChild('videoPlayer', { read: ElementRef }) videoplayer?: ElementRef;
 
     videos: Video[] = [];
     selectedVideo: number = 0;
+
+    playing: boolean = false;
+    paused: boolean = false;
+    progress: number = 0;
 
     constructor(private restService: RestService, private cdRef: ChangeDetectorRef, private router: Router, private ipcService: IpcService) { }
 
@@ -32,11 +37,11 @@ export class VideosComponent implements OnInit {
         this.restService.getVideos().subscribe({
             next: (res) => {
                 var videos = [];
-                var name, fullname;
-                for (var i in res){
-                    name = res[i].replace(/^.*[\\\/]/, '').replace(/\.[^/.]+$/, "");
-                    fullname = res[i].replace(/^.*[\\\/]/, '');
-                    videos.push(new Video(name, fullname))
+                var name, path;
+                for (var i in res) {
+                    path = res[i];
+                    name = path.replace(/^.*[\\\/]/, '').replace(/\.[^/.]+$/, "");
+                    videos.push(new Video(name, path));
                 }
 
                 videos.sort((a, b) => a.name.localeCompare(b.name));
@@ -44,7 +49,7 @@ export class VideosComponent implements OnInit {
 
                 if (this.scroll != null)
                     this.scroll.nativeElement.scrollTop = 0;
-                
+
                 this.cdRef.detectChanges();
             },
             error: (err) => console.log(`Request failed with error: ${err}`)
@@ -52,9 +57,12 @@ export class VideosComponent implements OnInit {
     }
 
     handleKeyboardEvent(event: KeyboardEvent) {
-        console.log(event.key)
         switch (event.key) {
-            case "Enter": this.openVideo(this.videos[this.selectedVideo]); break;
+            case "Enter": this.openVideo(); break;
+            case "A":
+            case "a": this.backward(); break;
+            case "d":
+            case "D": this.forward(); break;
             case "Q":
             case "q": this.back(); break;
             case "S":
@@ -66,36 +74,74 @@ export class VideosComponent implements OnInit {
         }
     }
 
-    back(): void {
-        this.ipcService.send("change_mode", "main");
-        this.router.navigate(["/"]);
+    backward(): void {
+        if (this.playing && this.videoplayer) {
+            var currentTime = this.videoplayer.nativeElement.currentTime - 10;
+            this.videoplayer.nativeElement.currentTime = currentTime >= 0 ? currentTime : 0;
+        }
+    }
+
+    forward(): void {
+        if (this.playing && this.videoplayer) {
+            var currentTime = this.videoplayer.nativeElement.currentTime + 10;
+            var duration = this.videoplayer.nativeElement.duration;
+            this.videoplayer.nativeElement.currentTime = currentTime <= duration ? currentTime : duration;
+        }
     }
 
     moveDown(): void {
-        this.selectedVideo = (this.selectedVideo + 1) % this.videos.length;
-        this.checkPosition();
+        if (!this.playing) {
+            this.selectedVideo = (this.selectedVideo + 1) % this.videos.length;
+            this.checkPosition();
+        } else if (this.playing && this.videoplayer) {
+            var currentTime = this.videoplayer.nativeElement.currentTime -= 60;
+            this.videoplayer.nativeElement.currentTime = currentTime >= 0 ? currentTime : 0;
+        }
     }
 
     moveUp(): void {
-        this.selectedVideo -= 1
-        if (this.selectedVideo < 0)
-            this.selectedVideo = this.videos.length - 1;
-        this.checkPosition();
+        if (!this.playing) {
+            this.selectedVideo -= 1
+            if (this.selectedVideo < 0)
+                this.selectedVideo = this.videos.length - 1;
+            this.checkPosition();
+        } else if (this.playing && this.videoplayer) {
+            var currentTime = this.videoplayer.nativeElement.currentTime += 60;
+            var duration = this.videoplayer.nativeElement.duration;
+            this.videoplayer.nativeElement.currentTime = currentTime <= duration ? currentTime : duration;
+        }
+    }
+
+    back(): void {
+        this.ipcService.send("change_mode", this.playing ? "video" : "main");
+        if (!this.playing)
+            this.router.navigate(["/"]);
+        //posible else para hacer pause
+        this.playing = !this.playing;
     }
 
     checkPosition() {
-        if (this.scroll != undefined && this.miniature != undefined)
+        if (this.scroll && this.miniature)
             this.scroll.nativeElement.scrollTop = this.miniature.nativeElement.clientHeight * this.selectedVideo;
 
         this.cdRef.detectChanges();
     }
 
-    openVideo(video: Video): void {
-        if (this.videos.length > 0)
-            this.restService.openVideo(this.videos[this.selectedVideo]).subscribe({
-                next: (res) => console.log(`${res["result"]}`),
-                error: (err) => console.log(`Request failed with error: ${err}`)
-            });
+    openVideo(): void {
+        if (this.playing) {
+            if (this.paused)
+                this.videoplayer?.nativeElement.play();
+            else {
+                this.videoplayer?.nativeElement.pause();
+                this.progress = this.videoplayer?.nativeElement.currentTime * 100 / this.videoplayer?.nativeElement.duration;
+            }
+            this.paused = !this.paused;
+        }
+        else if (this.videos.length > 0) {
+            this.ipcService.send("change_mode", "video-player");
+            this.playing = true;
+            this.paused = false;
+        }
     }
 
 }

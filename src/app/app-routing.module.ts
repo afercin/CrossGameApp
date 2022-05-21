@@ -3,18 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { GamesComponent } from './games/games.component';
 import { MainComponent } from './main/main.component';
 import { TvComponent } from './tv/tv.component';
-import { VideoPlayerComponent } from './videos/video-player/video-player.component';
 import { VideosComponent } from './videos/videos.component';
 
 const routes: Routes = [
     { path: "main", component: MainComponent },
     { path: "games", component: GamesComponent },
-    {
-        path: "videos", children: [
-            { path: "", component: VideosComponent },
-            { path: "player", component: VideoPlayerComponent }
-        ]
-    },
+    { path: "videos", component: VideosComponent },
     { path: "tv", component: TvComponent },
     { path: "", redirectTo: "/main", pathMatch: "full" }
 ];

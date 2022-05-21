@@ -1,9 +1,39 @@
-<app-video-player></app-video-player>
-<div *ngIf="videos" class="videos" #scroll>
+<div *ngIf="playing">
+
+    <video #videoPlayer
+        autoplay
+        class="area">
+
+        <source src="{{ videos[selectedVideo].path }}" type="video/mp4">
+
+    </video>
+
+    <div class="overlay" *ngIf="paused">
+
+        <img src="assets/icons/pause.png"/>
+
+        <div class="container">
+
+            <div class="progress-bar">
+                <span [style.width]="progress + '%'">
+           
+                </span>
+            </div>
+            
+            <p>{{videoplayer?.nativeElement.currentTime * 1000 | date:'H:mm:ss':'UTC'}} / {{videoplayer?.nativeElement.duration * 1000 | date:'H:mm:ss':'UTC'}}</p>
+    
+        </div>
+
+    </div>
+
+</div>
+
+<div #scroll *ngIf="videos && !playing" class="videos">
+
     <p #miniature
        *ngFor="let video of videos"
-       (click)="openVideo(video)"
        [ngStyle]="{opacity: videos[selectedVideo] == video ? '1' : '0.5'}">
        {{ video.name }}
     </p>
+
 </div>

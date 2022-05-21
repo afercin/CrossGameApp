@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { GamesComponent } from './games/games.component';
 import { GameThumbnailComponent } from './games/game-thumbnail/game-thumbnail.component';
 import { VideosComponent } from './videos/videos.component';
-import { VideoPlayerComponent } from './videos/video-player/video-player.component';
 import { TvComponent } from './tv/tv.component';
 import { MainComponent } from './main/main.component';
 import { ClockComponent } from './clock/clock.component';
@@ -18,7 +17,6 @@ import { ClockComponent } from './clock/clock.component';
         GamesComponent,
         GameThumbnailComponent,
         VideosComponent,
-        VideoPlayerComponent,
         TvComponent,
         MainComponent,
         ClockComponent

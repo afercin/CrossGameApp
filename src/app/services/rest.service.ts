@@ -34,10 +34,6 @@ export class RestService {
         return this.http.get(`${this.endpoint}/videos`, httpOptions);
     }
 
-    public openVideo(video: Video): Observable<any> {
-        return this.http.get(`${this.endpoint}/video/open?name=${video.fullname}`, httpOptions);
-    }
-
     public getAudioDevices(): Observable<any> {
         return this.http.get(`${this.endpoint}/system/audio`, httpOptions);
     }
