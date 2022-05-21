@@ -9,6 +9,7 @@ import { RestService } from './services/rest.service';
 })
 export class AppComponent implements OnInit {
     title = 'CrossGame';
+    backgroundPath = "/rpi/resources/background/Hi-Tech.mp4";
     startUp: any;
 
     constructor(private restService: RestService) {
