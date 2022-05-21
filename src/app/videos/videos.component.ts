@@ -48,11 +48,12 @@ export class VideosComponent implements OnInit {
         this.restService.getVideos().subscribe({
             next: (res) => {
                 var videos = [];
-                var name, path;
+                var name, path, extension;
                 for (var i in res) {
                     path = res[i];
                     name = path.replace(/^.*[\\\/]/, '').replace(/\.[^/.]+$/, "");
-                    videos.push(new Video(name, path));
+                    extension = path.substring(path.lastIndexOf('.') + 1);
+                    videos.push(new Video(name, path, extension));
                 }
 
                 videos.sort((a, b) => a.name.localeCompare(b.name));
@@ -126,7 +127,7 @@ export class VideosComponent implements OnInit {
     }
 
     back(): void {
-        this.ipcService.send("change_mode", this.playing ? "video" : "main");
+        this.ipcService.send("change_mode", this.playing ? "videos" : "main");
         if (!this.playing) {
             this.scroll2.play();
             this.router.navigate(["/"]);
@@ -156,6 +157,9 @@ export class VideosComponent implements OnInit {
             this.ipcService.send("change_mode", "video-player");
             this.playing = true;
             this.paused = false;
+            console.log(this.videos[this.selectedVideo].name)
+            console.log(this.videos[this.selectedVideo].extension)
+            console.log(this.videos[this.selectedVideo].path)
         }
     }
 

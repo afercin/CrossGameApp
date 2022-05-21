@@ -1,5 +1,5 @@
 
-<video class="area" autoplay loop muted>
+<video class="area" autoplay loop muted *ngIf="currentMode !== 'video-player'">
         <source src="{{backgroundPath}}" type="video/mp4">
 </video>
 <div class="container area">
