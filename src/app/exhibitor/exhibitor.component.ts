@@ -24,7 +24,6 @@ export class ExhibitorComponent implements OnInit {
     @Input() type: string = "";
 
     selectedItem: number = 0;
-    maxY: number = 0;
 
     scroll1: any;
     scroll2: any;
@@ -45,7 +44,6 @@ export class ExhibitorComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.maxY = Math.floor((this.items.length) / 7);
         if (this.scroll)
             this.scroll.nativeElement.scrollTop = 0;
     }
@@ -113,7 +111,7 @@ export class ExhibitorComponent implements OnInit {
         if (this.selectedItem - 7 >= 0)
             this.selectedItem -= 7
         else {
-            this.selectedItem = this.selectedItem + (this.maxY - 1) * 7;
+            this.selectedItem = this.selectedItem + (Math.floor((this.items.length) / 7)) * 7;
             if (this.selectedItem >= this.items.length)
                 this.selectedItem = this.items.length - 1;
         }
@@ -121,6 +119,7 @@ export class ExhibitorComponent implements OnInit {
     }
 
     checkPosition() {
+        console.log(this.selectedItem);
         if (this.scroll != undefined && this.miniature != undefined)
             this.scroll.nativeElement.scrollTop = this.miniature.nativeElement.clientHeight * Math.floor(this.selectedItem / 7);
         this.scroll1.play();
