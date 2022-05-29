@@ -1,0 +1,24 @@
+<div *ngIf="items">
+
+    <div *ngIf="type == 'Games'" class="exhibitor" #scroll>
+
+        <app-game-thumbnail #miniature
+                            class="game"
+                            *ngFor="let game of items"
+                            [game]="game"
+                            [class]="items[selectedItem]==game ? 'selected': ''">
+        </app-game-thumbnail>
+
+    </div>
+
+    <div *ngIf="type == 'TV'" class="exhibitor" #scroll>
+
+        <img #miniature
+             class="channel"
+             *ngFor="let channel of items" 
+             [src]="channel.logo"
+             [class]="items[selectedItem].logo==channel.logo ? 'selected': ''">
+
+    </div>
+    
+</div>

@@ -1,8 +1,9 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Game } from '../games/game';
+import { Game } from '../types/game';
 import { Video } from '../videos/video';
+import { Channel } from '../types/channel';
 
 const httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json", "Authorization": "c31z" })
@@ -48,5 +49,9 @@ export class RestService {
 
     public initializeDefaults(): Observable<any> {
         return this.http.get(`${this.endpoint}/system/initialize`, httpOptions);
+    }
+
+    public getChannels(): Observable<Channel[]> {
+        return this.http.get<Channel[]>(`${this.endpoint}/tv/channels`, httpOptions);
     }
 }
