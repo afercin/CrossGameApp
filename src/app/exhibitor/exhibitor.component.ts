@@ -64,15 +64,21 @@ export class ExhibitorComponent implements OnInit {
         }
     }
 
-    launch(item: Game|Channel): void {
+    launch(item: Game | Channel): void {
         if (this.items == "404") {
             this.error.play();
             return
         }
 
-        switch(typeof(item)){
-            case typeof(Game): 
+        switch (this.type) {
+            case "Game":
                 this.restService.launchGame(this.items[this.selectedItem]).subscribe({
+                    next: (res) => console.log(`${res["result"]}`),
+                    error: (err) => console.log(`Request failed with error: ${err}`)
+                });
+                break;
+            case "TV":
+                this.restService.setChannel(this.selectedItem + 1).subscribe({
                     next: (res) => console.log(`${res["result"]}`),
                     error: (err) => console.log(`Request failed with error: ${err}`)
                 });
@@ -119,7 +125,6 @@ export class ExhibitorComponent implements OnInit {
     }
 
     checkPosition() {
-        console.log(this.selectedItem);
         if (this.scroll != undefined && this.miniature != undefined)
             this.scroll.nativeElement.scrollTop = this.miniature.nativeElement.clientHeight * Math.floor(this.selectedItem / 7);
         this.scroll1.play();

@@ -54,4 +54,9 @@ export class RestService {
     public getChannels(): Observable<Channel[]> {
         return this.http.get<Channel[]>(`${this.endpoint}/tv/channels`, httpOptions);
     }
+
+    public setChannel(channelNumber: number): Observable<any> {
+        console.log(`${this.endpoint}/tv/channel?number=${channelNumber}`)
+        return this.http.get(`${this.endpoint}/tv/channel?number=${channelNumber}`, httpOptions);
+    }
 }
