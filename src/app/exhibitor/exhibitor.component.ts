@@ -71,7 +71,7 @@ export class ExhibitorComponent implements OnInit {
         }
 
         switch (this.type) {
-            case "Game":
+            case "Games":
                 this.restService.launchGame(this.items[this.selectedItem]).subscribe({
                     next: (res) => console.log(`${res["result"]}`),
                     error: (err) => console.log(`Request failed with error: ${err}`)
