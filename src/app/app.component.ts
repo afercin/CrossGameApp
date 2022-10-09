@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
     startUp: any;
 
     constructor(private restService: RestService, private ipcService: IpcService, private cdRef: ChangeDetectorRef) {
-        this.currentMode = "app";
+        this.currentMode = "main";
         this.startUp = new Audio();
         this.startUp.src = "assets/sounds/startup.wav"
         this.startUp.load()
@@ -23,9 +23,10 @@ export class AppComponent implements OnInit {
 
     ngOnInit(): void {
         this.restService.initializeDefaults().subscribe({
-            next: (res) => this.startUp.play(),
-            error: (err) => console.log(`Request failed with error: ${err}`)}
-        )
+            next: (res) => console.log("Done"),
+            error: (err) => console.log(`Request failed with error: ${err}`),
+            complete: () => this.startUp.play()
+        })
         this.ipcService.on("change_mode", (event: any, arg: string) => {
             this.currentMode = arg;
             this.cdRef.detectChanges();

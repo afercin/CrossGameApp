@@ -1,6 +1,6 @@
 {
   "name": "crossgameapp",
-  "version": "0.0.0",
+  "version": "0.3.0",
   "main": "main.js",
   "bin": "main.js",
   "email": "afercin@gmail.com",

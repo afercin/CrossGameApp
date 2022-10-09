@@ -12,7 +12,7 @@ import { RestService } from '../services/rest.service';
     }
 })
 export class MainComponent implements OnInit {
-    option: number = -1;
+    option: number = 1;
     optionName: string[];
 
     scroll1: any;
