@@ -24,6 +24,10 @@ body {
     background-color: black;
 }
 
+* {
+    cursor: none;
+}
+
 p {
     font-size: 1.25vw;
     margin: 0;
