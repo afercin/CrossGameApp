@@ -27,9 +27,9 @@ export class GameThumbnailComponent implements OnInit {
                     if (this.game != undefined) {
                         for (var imageNumber in res) {
                             if (res[imageNumber].indexOf("_miniature") !== -1)
-                                this.miniaturePath = isDevMode() ? `http://10.0.0.20:5000/api/v1/game/image?path=${res[imageNumber]}` : res[imageNumber];
+                                this.miniaturePath = isDevMode() ? `http://10.0.0.1:5000/api/v1/game/image?path=${res[imageNumber]}` : res[imageNumber];
                             else
-                                this.imagePath = isDevMode() ? `http://10.0.0.20:5000/api/v1/game/image?path=${res[imageNumber]}` : res[imageNumber];
+                                this.imagePath = isDevMode() ? `http://10.0.0.1:5000/api/v1/game/image?path=${res[imageNumber]}` : res[imageNumber];
                         }
                     }
                     this.ready = true;

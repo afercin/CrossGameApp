@@ -15,7 +15,7 @@ const httpOptions = {
 export class RestService {
     private endpoint: string;
     constructor(private http: HttpClient) {
-        var ip = isDevMode() ? "10.0.0.20" : "localhost";
+        var ip = isDevMode() ? "10.0.0.1" : "localhost";
         this.endpoint = `http://${ip}:5000/api/v1`
     }
 
