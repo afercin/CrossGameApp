@@ -84,6 +84,7 @@ export class ExhibitorComponent implements OnInit {
                 });
                 break;
         }
+        this.ipcService.send("change_mode", "hide_ui");
     }
 
     back(): void {

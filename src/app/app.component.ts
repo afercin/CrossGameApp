@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
             complete: () => this.startUp.play()
         })
         this.ipcService.on("change_mode", (event: any, arg: string) => {
+            console.log(arg);
             this.currentMode = arg;
             this.cdRef.detectChanges();
         });
