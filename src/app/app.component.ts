@@ -11,13 +11,13 @@ import { RestService } from './services/rest.service';
 export class AppComponent implements OnInit {
     currentMode: string;
     title = 'CrossGame';
-    backgroundPath = "/rpi/resources/background/Hi-Tech.mp4";
+    backgroundPath = "/opt/crossgameapp/media/background/default.mp4";
     startUp: any;
 
     constructor(private restService: RestService, private ipcService: IpcService, private cdRef: ChangeDetectorRef) {
         this.currentMode = "main";
         this.startUp = new Audio();
-        this.startUp.src = "assets/sounds/startup.wav"
+        this.startUp.src = "/opt/crossgameapp/media/audio/startup.wav"
         this.startUp.load()
     }
 

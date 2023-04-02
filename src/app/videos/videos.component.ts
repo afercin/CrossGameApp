@@ -32,11 +32,11 @@ export class VideosComponent implements OnInit {
 
     constructor(private restService: RestService, private cdRef: ChangeDetectorRef, private router: Router, private ipcService: IpcService) { 
         this.scroll1 = new Audio();
-        this.scroll1.src = "assets/sounds/scroll1.wav"
+        this.scroll1.src = "/opt/crossgameapp/media/audio/scroll1.wav"
         this.scroll1.load()
 
         this.scroll2 = new Audio();
-        this.scroll2.src = "assets/sounds/scroll2.wav"
+        this.scroll2.src = "/opt/crossgameapp/media/audio/scroll2.wav"
         this.scroll1.load()
     }
 

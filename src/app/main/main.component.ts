@@ -20,7 +20,7 @@ export class MainComponent implements OnInit {
     constructor(private cdRef: ChangeDetectorRef, private router: Router, private restService: RestService, private ipcService: IpcService) {
         this.optionName = ["tv", "games", "videos"]
         this.scroll1 = new Audio();
-        this.scroll1.src = "assets/sounds/scroll1.wav"
+        this.scroll1.src = "/opt/crossgameapp/media/audio/scroll1.wav"
         this.scroll1.load()
     }
 
